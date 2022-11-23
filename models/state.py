@@ -2,7 +2,7 @@
 """ State Module for HBNB project """
 from models.base_model import BaseModel, Base
 from models.city import City
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import models
 from os import getenv
@@ -10,7 +10,7 @@ from os import getenv
 
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     """ State class """
 
     __tablename__ = "states"
