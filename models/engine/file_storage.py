@@ -13,14 +13,13 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
-        obje ={}
-        if cls is None:
-            return self.__objects
-        else:
-            my_dic = {obj: key for obj, key in self.__objects.items()
-                   if type(key) == cls}
-            return my_dic
-
+        if cls is not None:
+            n_Dic = {}
+            for key, value in self.__objects.items():
+                if cls == value.__class__:
+                    n_Dic[key] = value
+            return n_Dic
+        return self.__objects
             
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -61,6 +60,12 @@ class FileStorage:
 
     def delete(self, obj=None):
         """ delete obj from __objects """
+        if not obj:
+            return
         if obj:
             del self.__objects[obj.__class__.__name__ + '.' + obj.id]
             self.save()
+
+    def close(self):
+        """Call reload() method for deserializing the JSON file to objects"""
+        self.reload()
