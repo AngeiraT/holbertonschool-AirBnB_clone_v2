@@ -29,3 +29,15 @@ class DBStorage:
         
         if env == "test":
             Base.metadata.drop_all(self.__engine)
+
+    def all(self, cls=None):
+        """ Show all class objects in DB storage or specified class """
+        if cls:
+            objects = self.__session.query(cls).all()
+        else:
+            classes = [State, City, User, Place, Review, Amenity]
+            objects = []
+            for c in classes:
+                objects += self.__session.query(c)
+        return {"{}.{}".format(type(obj).__name__, obj.id): obj for obj in
+                objects}
