@@ -41,3 +41,30 @@ class DBStorage:
                 objects += self.__session.query(c)
         return {"{}.{}".format(type(obj).__name__, obj.id): obj for obj in
                 objects}
+
+    def new(self, obj):
+        """Add the object to the current DB session"""
+        self.__session.add(obj)
+
+    def save(self):
+        """ commit all changes of the current database session """
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        """ Delete object from current DB session """
+        if obj:
+            self.__session.delete(obj)
+
+    def reload(self):
+        """ Reload all tables and session from the engine """
+        Base.metadata.create_all(self.__engine)
+        self.__session = sessionmaker(bind=self.__engine,
+                                      expire_on_commit=False)
+        Session = scoped_session(self.__session)
+        self.__session = Session()
+
+    def close(self):
+        """ Close Session """
+        self.__session.close()
+
+    
