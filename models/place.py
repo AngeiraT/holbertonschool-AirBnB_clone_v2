@@ -9,7 +9,6 @@ from models.review import Review
 import models
 from os import getenv
 
-
 place_amenity = Table(
     'place_amenity', Base.metadata,
     Column(
@@ -26,10 +25,10 @@ place_amenity = Table(
         nullable=False)
 )
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """ A place to stay """
 
-    __tablename__='places'
+    __tablename__ = 'places'
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
@@ -59,7 +58,7 @@ class Place(BaseModel):
                 new.append(review)
         return new
 
- @reviews.setter
+    @reviews.setter
     def amenities(self, obj):
         """
         Setter attribute amenities that handles append method
