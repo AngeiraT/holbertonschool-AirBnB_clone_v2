@@ -13,21 +13,15 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
+        obje ={}
         if cls is None:
             return self.__objects
         else:
-            # print("CLASE: {}".format(cls))
-            my_dict = {}
-            # print("OBJECTS: {}".format(self.__objects))
-            for key in self.__objects:
-                name = key.split('.')
-                # print("NAME: {}".format(name))
-                # print("CLSNAME: {}".format(cls.__name__))
-                if name[0] == cls.__name__:
-                    my_dict[key] = self.__objects[key]
-            # print("MY_DICT: {}".format(my_dict))
-            return my_dict
+            my_dic = {obj: key for obj, key in self.__objects.items()
+                   if type(key) == cls}
+            return my_dic
 
+            
     def new(self, obj):
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
