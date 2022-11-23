@@ -29,6 +29,19 @@ class HBNBCommand(cmd.Cmd):
              'max_guest': int, 'price_by_night': int,
              'latitude': float, 'longitude': float
             }
+    def num_or_float(self, arg: str):
+        """
+        Method to convert str to int or float
+        """
+        try:
+            return int(arg)
+        except Exception:
+            pass
+
+        try:
+            return float(arg)
+        except Exception:
+            return arg
 
     def preloop(self):
         """Prints if isatty is false"""
