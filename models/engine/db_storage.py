@@ -12,6 +12,7 @@ from models.review import Review
 from models.base_model import BaseModel, Base
 
 
+
 classDict = {"City": City, "State": State,
                      "User": User, "Place": Place,
                      "Review": Review, "Amenity": Amenity}
