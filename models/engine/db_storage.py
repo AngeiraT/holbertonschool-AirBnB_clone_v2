@@ -9,7 +9,12 @@ from models.state import State
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from models.base_model import Base
+from models.base_model import BaseModel, Base
+
+
+
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 class DBStorage:
     """db"""

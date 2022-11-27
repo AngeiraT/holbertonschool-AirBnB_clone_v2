@@ -16,8 +16,6 @@ class City(BaseModel, Base):
         places = relationship("Place", backref='cities',
             cascade="all, delete-ophan")
     else:
-        class City(BaseModel):
-            '''Class City for FileStorage'''
-            name = ""
-            state_id = ""
+        name = ""
+        state_id = ""
 

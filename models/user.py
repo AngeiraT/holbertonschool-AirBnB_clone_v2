@@ -23,9 +23,7 @@ class User(BaseModel, Base):
                 ackref="user",
                 cascade="all, delete-orphan")
         else:
-            class User(BaseModel):
-                '''Defined class to work with FileStorage'''
-                email = ''
-                password = ''
-                first_name = ''
-                last_name = ''
+            email = ''
+            password = ''
+            first_name = ''
+            last_name = ''

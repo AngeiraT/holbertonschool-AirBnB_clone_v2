@@ -18,6 +18,8 @@ class State(BaseModel, Base):
             cities = relationship("City", backref="state",
                               cascade="all, delete-orphan")
         else:
+            name = ""
+            
             @property
             def cities(self):
                 """ Returns a list of all cities in state """
