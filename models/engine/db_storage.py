@@ -13,9 +13,6 @@ from models.base_model import BaseModel, Base
 
 
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
 class DBStorage:
     """db"""
 
@@ -23,7 +20,14 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        self.__engine = create_engine(URI, pool_pre_ping=True)
+        user = getenv('HBNB_MYSQL_USER')
+        pwd = getenv('HBNB_MYSQL_PWD')
+        host = getenv('HBNB_MYSQL_HOST')
+        db = getenv('HBNB_MYSQL_DB')
+        env = getenv('HBNB_ENV')
+
+        self.__engine = create_engine("mysql+pymysql://{}:{}@{}/{}"
+                            .format(user, pwd, host, db),pool_pre_ping=True)
         
         if getenv('HBNB_ENV') == "test":
             Base.metadata.drop_all(self.__engine)
