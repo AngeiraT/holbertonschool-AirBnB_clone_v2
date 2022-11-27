@@ -26,3 +26,6 @@ class State(BaseModel, Base):
                 return [city for city in models.storage.all(City).values() if
                     self.id == city.state_id]
 
+        def __init__(self, *args, **kwargs):
+            """Instantiates a State """
+            super().__init__(*args, **kwargs)
