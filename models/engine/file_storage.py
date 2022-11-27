@@ -13,13 +13,13 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
-        obje ={}
-        if cls is None:
-            return self.__objects
-        else:
-            my_dic = {obj: key for obj, key in self.__objects.items()
-                   if type(key) == cls}
-            return my_dic
+        dictionary = {}
+        if cls:
+            for key, value in FileStorage.__objects.items():
+                if value.__class__ == cls:
+                    dictionary[key] = value
+            return dictionary
+        return FileStorage.__objects
 
             
     def new(self, obj):
