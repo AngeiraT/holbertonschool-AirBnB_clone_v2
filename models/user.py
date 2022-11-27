@@ -20,7 +20,7 @@ class User(BaseModel, Base):
                 cascade="all, delete-orphan")
             reviews = relationship(
                 "Review",
-                ackref="user",
+                backref="user",
                 cascade="all, delete-orphan")
         else:
             email = ''
