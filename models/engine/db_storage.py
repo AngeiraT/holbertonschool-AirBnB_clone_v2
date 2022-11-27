@@ -1,17 +1,10 @@
 #!/usr/bin/python3
 """ SQL db """
+from sqlalchemy import (create_engine)
 from os import getenv
-from sqlalchemy import create_engine
+from sqlalchemy.orm.scoping import scoped_session
 from sqlalchemy.schema import MetaData
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import sessionmaker, scoped_session
-from models.user import User
-from models.city import City
-from models.state import State
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
-from models.base_model import Base
 
 username = getenv('HBNB_MYSQL_USER')
 password = getenv('HBNB_MYSQL_PWD')
@@ -38,6 +31,13 @@ class DBStorage:
 
     def all(self, cls=None):
         """ Show all class objects in DB storage or specified class """
+        from models.base_model import BaseModel, Base
+        from models.amenity import Amenity
+        from models.city import City
+        from models.place import Place
+        from models.review import Review
+        from models.state import State
+        from models.user import User
         classDict = {"City": City, "State": State,
                      "User": User, "Place": Place,
                      "Review": Review, "Amenity": Amenity}
@@ -71,10 +71,19 @@ class DBStorage:
 
     def reload(self):
         """ Reload all tables and session from the engine """
+        from models.base_model import BaseModel, Base
+        from models.amenity import Amenity
+        from models.city import City
+        from models.place import Place
+        from models.review import Review
+        from models.state import State
+        from models.user import User
+        
         Base.metadata.create_all(self.__engine)
-        self.__session = sessionmaker(bind=self.__engine,
-                                      expire_on_commit=False)
-        Session = scoped_session(self.__session)
+        
+        session_factory = sessionmaker(
+            bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(session_factory)
         self.__session = Session()
 
     def close(self):
