@@ -2,18 +2,20 @@
 """ SQL db """
 from sqlalchemy import (create_engine)
 from os import getenv
-from sqlalchemy.orm.scoping import scoped_session
-from sqlalchemy.schema import MetaData
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, scoped_session
+from models.user import User
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from models.base_model import BaseModel, Base
 
-username = getenv('HBNB_MYSQL_USER')
-password = getenv('HBNB_MYSQL_PWD')
-db = getenv('HBNB_MYSQL_DB')
-host = getenv('HBNB_MYSQL_HOST')
-v_env = getenv('HBNB_ENV')
 
-URI = f"mysql+mysqldb://{username}:{password}@{host}/{db}"
 
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 class DBStorage:
     """db"""
