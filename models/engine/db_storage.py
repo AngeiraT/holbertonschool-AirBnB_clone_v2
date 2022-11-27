@@ -9,7 +9,7 @@ from models.state import State
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 
 
 
@@ -27,7 +27,7 @@ class DBStorage:
         host = getenv('HBNB_MYSQL_HOST')
         db = getenv('HBNB_MYSQL_DB')
 
-        self.__engine = create_engine("mysql+pymysql://{}:{}@{}/{}"
+        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}"
                             .format(user, pwd, host, db),pool_pre_ping=True)
         
         if getenv('HBNB_ENV') == "test":
