@@ -24,10 +24,8 @@ class DBStorage:
     def __init__(self):
         self.__engine = create_engine(URI, pool_pre_ping=True)
         
-        if env == "test":
-            metadata = MetaData(self.__engine)
-            metadata.reflect()
-            metadata.drop_all()
+        if getenv('HBNB_ENV') == "test":
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """ Show all class objects in DB storage or specified class """
