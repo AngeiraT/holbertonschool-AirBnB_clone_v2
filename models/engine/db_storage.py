@@ -12,10 +12,11 @@ from models.review import Review
 from models.base_model import BaseModel, Base
 
 
-
+classDict = {"City": City, "State": State,
+                     "User": User, "Place": Place,
+                     "Review": Review, "Amenity": Amenity}
 class DBStorage:
     """db"""
-
     __engine = None
     __session = None
 
@@ -33,16 +34,6 @@ class DBStorage:
 
     def all(self, cls=None):
         """ Show all class objects in DB storage or specified class """
-        from models.base_model import BaseModel, Base
-        from models.amenity import Amenity
-        from models.city import City
-        from models.place import Place
-        from models.review import Review
-        from models.state import State
-        from models.user import User
-        classDict = {"City": City, "State": State,
-                     "User": User, "Place": Place,
-                     "Review": Review, "Amenity": Amenity}
         objects = {}
         if cls is None:
             for className in classDict:
