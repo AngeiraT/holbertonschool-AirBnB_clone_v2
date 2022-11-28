@@ -27,7 +27,7 @@ def c(text):
     return "C %s" % text.replace('_', ' ')
 
 
-@app.route('/python')
+@app.route('/python/')
 @app.route('/python/<text>')
 def python(text='is cool'):
     """Displays Python default or not"""
