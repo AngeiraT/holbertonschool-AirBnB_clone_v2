@@ -30,7 +30,7 @@ def c(text):
 @app.route('/python', strict_slashes=False)
 def python(text="is cool"):
     """Displays Python default or not"""
-    return 'Python {}'.format(text.replace('_',' '))
+    return 'Python {}'.format(text).replace('_',' ')
 
 
 
