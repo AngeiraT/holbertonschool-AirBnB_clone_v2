@@ -39,11 +39,7 @@ For this part of the project you should to create your first web server in Pytho
 ## Instalation:wrench:
  
 Follow the following instructions to get a copy of the program and run in your local machine.
- 
-* Clone the following repository.
-```
-https://github.com/PabloYepes27/AirBnB_clone_v2.git
-```
+
  
 * Install Flask
 ```
