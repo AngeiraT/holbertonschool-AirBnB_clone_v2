@@ -6,28 +6,29 @@ from flask import Flask
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 
-@app.route('/', strict_slashes=False)
+@app.route('/')
 def hello():
     """Print a message from Flask"""
     return 'Hello HBNB!'
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route('/hbnb')
 def hbnb():
     """Print hbnbn message from Flask"""
     return 'HBNB'
 
 
-@app.route('/c/<text>', strict_slashes=False)
+@app.route('/c/<text>')
 def c(text):
     """Displays C"""
     return "C %s" % text.replace('_', ' ')
 
 
-@app.route('/python', defaults={'text': 'is cool'}, strict_slashes=False)
-@app.route('/python/<text>', strict_slashes=False)
+@app.route('/python', defaults={'text': 'is cool'})
+@app.route('/python/<text>')
 def python(text):
     """Displays Python default or not"""
     return "Python %s" % text.replace('_', ' ')
