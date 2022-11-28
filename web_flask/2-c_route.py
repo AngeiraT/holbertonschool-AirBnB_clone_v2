@@ -19,10 +19,11 @@ def hbnb():
     """Print hbnbn message from Flask"""
     return 'HBNB'
 
+
 @app.route('/c/<text>', strict_slashes=False)
 def c(text):
     """Displays C"""
-    return 'C {}'.format(text.replace('_', ' '))
+    return "C %s" % text.replace('_', ' ')
 
 
 if __name__ == "__main__":
