@@ -7,17 +7,19 @@ from os import getenv
 
     
     
-if getenv("HBNB_TYPE_STORAGE") == "db":
-    
-    class Amenity(BaseModel, Base):
-        """
-        Amenity inherits from BaseModel and Base (respect the order)
-        """
+class Amenity(BaseModel, Base):
+    """
+    Amenity inherits from BaseModel and Base (respect the order)
+    """
+    if getenv("HBNB_TYPE_STORAGE") == "db":
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)
         places_amenities = relationship(
             "Place",secondary="place_amenity")
-else:
-        class Amenity(BaseModel):
-            """Create class Amenity"""
-            name = ""
+    else:
+        name = ""
+        state_id = ""
+
+    def __init__(self, *args, **kwargs):
+        """initializes Amenity"""
+        super().__init__(*args, **kwargs)

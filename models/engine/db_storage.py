@@ -1,44 +1,40 @@
 #!/usr/bin/python3
 """ SQL db """
-from sqlalchemy import (create_engine)
 from os import getenv
-from sqlalchemy.orm.scoping import scoped_session
-from sqlalchemy.schema import MetaData
-from sqlalchemy.orm import sessionmaker
-
-username = getenv('HBNB_MYSQL_USER')
-password = getenv('HBNB_MYSQL_PWD')
-db = getenv('HBNB_MYSQL_DB')
-host = getenv('HBNB_MYSQL_HOST')
-v_env = getenv('HBNB_ENV')
-
-URI = f"mysql+mysqldb://{username}:{password}@{host}/{db}"
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, scoped_session
+from models.user import User
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from models.base_model import Base
 
 
+
+classDict = {"City": City, "State": State,
+                     "User": User, "Place": Place,
+                     "Review": Review, "Amenity": Amenity}
 class DBStorage:
     """db"""
-
     __engine = None
     __session = None
 
     def __init__(self):
-        self.__engine = create_engine(URI, pool_pre_ping=True)
+        user = getenv('HBNB_MYSQL_USER')
+        pwd = getenv('HBNB_MYSQL_PWD')
+        host = getenv('HBNB_MYSQL_HOST')
+        db = getenv('HBNB_MYSQL_DB')
+
+        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}"
+                            .format(user, pwd, host, db),pool_pre_ping=True)
         
         if getenv('HBNB_ENV') == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """ Show all class objects in DB storage or specified class """
-        from models.base_model import BaseModel, Base
-        from models.amenity import Amenity
-        from models.city import City
-        from models.place import Place
-        from models.review import Review
-        from models.state import State
-        from models.user import User
-        classDict = {"City": City, "State": State,
-                     "User": User, "Place": Place,
-                     "Review": Review, "Amenity": Amenity}
         objects = {}
         if cls is None:
             for className in classDict:
@@ -69,14 +65,6 @@ class DBStorage:
 
     def reload(self):
         """ Reload all tables and session from the engine """
-        from models.base_model import BaseModel, Base
-        from models.amenity import Amenity
-        from models.city import City
-        from models.place import Place
-        from models.review import Review
-        from models.state import State
-        from models.user import User
-        
         Base.metadata.create_all(self.__engine)
         
         session_factory = sessionmaker(
