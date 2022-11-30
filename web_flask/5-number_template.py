@@ -40,7 +40,7 @@ def number(n):
     return "%d is a number" % n
 
 
-@app.route('/number_template/<int:n>', strict_slashes=False)
+@app.route('/number_template/<int:n>')
 def hbnb_html(n):
     """ Function that displays HTML page """
     return(render_template('5-number.html', n=n))
