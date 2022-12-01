@@ -145,7 +145,7 @@ class HBNBCommand(cmd.Cmd):
             new_dict = attr.split('=', 1)
             attributes[new_dict[0]] = new_dict[1]
 
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[className]()
 
         for key, value in attributes.items():
             value = value.strip("\"'").replace("_", " ")
