@@ -31,7 +31,7 @@ def c(text):
 @app.route('/python/<text>')
 def python(text):
     """Displays Python default or not"""
-    return "Python %s" % text.replace('_', ' ')
+    return("Python {}".format(text.replace("_", " ")))
 
 
 
