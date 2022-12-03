@@ -35,10 +35,9 @@ def python(text):
 
 
 @app.route('/number/<int:n>')
-def number(n):
-    """Displays an integer"""
+def int_text(n):
+    """Displays 'n' only if it is an integer, in a message"""
     return "%d is a number" % n
-
 
 
 
