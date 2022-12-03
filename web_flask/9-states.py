@@ -4,7 +4,10 @@
 from flask import Flask, render_template
 from models import storage
 from models import State
+
+
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
@@ -13,14 +16,14 @@ def teardown(exception):
     storage.close()
 
 
-@app.route('/states/', strict_slashes=False)
+@app.route('/states/')
 def no_cities():
     """states only"""
     states = storage.all('State')
     return render_template('9-states.html', states=states)
 
 
-@app.route('/states/<id>', strict_slashes=False)
+@app.route('/states/<id>')
 def state_and_cities(id):
     """by id"""
     for state in storage.all("State").values():
