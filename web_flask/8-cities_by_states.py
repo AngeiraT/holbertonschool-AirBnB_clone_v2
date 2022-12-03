@@ -2,6 +2,7 @@
 """ Script that starts a Flask web application """
 from flask import Flask, render_template
 from models import storage
+from models import State
 
 
 app = Flask(__name__)
@@ -9,7 +10,7 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def teadown(exception):
+def teardown(exception):
     """Remove the current SQLAlchemy Session"""
     storage.close()
 
