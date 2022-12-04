@@ -10,12 +10,13 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models.base_model import Base
-
+from sqlalchemy.schema import MetaData
 
 
 classDict = {"City": City, "State": State,
-                     "User": User, "Place": Place,
-                     "Review": Review, "Amenity": Amenity}
+             "User": User, "Place": Place,
+             "Review": Review, "Amenity": Amenity}
+
 class DBStorage:
     """db"""
     __engine = None
@@ -31,24 +32,24 @@ class DBStorage:
                             .format(user, pwd, host, db),pool_pre_ping=True)
         
         if getenv('HBNB_ENV') == "test":
-            Base.metadata.drop_all(self.__engine)
+            metadata = MetaData(self.__engine)
+            metadata.reflect()
+            metadata.drop_all()
 
     def all(self, cls=None):
         """ Show all class objects in DB storage or specified class """
-        objects = {}
-        if cls is None:
-            for className in classDict:
-                data = self.__session.query(classDict[className]).all()
-                for obj in data:
-                    objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
+        dictionary = {}
 
+        if cls is None:
+            result = self.__session.query(
+                     Amenity, City, State, Place, Review, User).all()
         else:
-            if isinstance(cls, str):
-                cls = classDict[cls]
-            data = self.__session.query(cls).all()
-            for obj in data:
-                objects[f"{obj.id}"] = obj
-        return objects
+            result = self.__session.query(cls).all()
+
+        for obj in result:
+            dictionary[obj.__class__.__name__ + '.' + obj.id] = obj
+
+        return dictionary
 
     def new(self, obj):
         """Add the object to the current DB session"""
@@ -76,6 +77,6 @@ class DBStorage:
 
     def close(self):
         """ Close Session """
-        self.__session.close()
+        self.__session.remove()
 
     
