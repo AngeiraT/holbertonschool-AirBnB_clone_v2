@@ -13,7 +13,6 @@ app = Flask(__name__)
 def states_list():
     """ State list """
     states = storage.all("State")
-    states = [state for state in states.values()]
     return render_template("8-cities_by_states.html", states=states)
 
 
