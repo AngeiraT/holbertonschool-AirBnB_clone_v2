@@ -4,6 +4,7 @@
 from flask import Flask, render_template
 from models import storage
 from models import State
+from models.state import State
 
 
 app = Flask(__name__)
@@ -26,10 +27,11 @@ def no_cities():
 @app.route('/states/<id>')
 def state_and_cities(id):
     """by id"""
-    for state in storage.all("State").values():
-        if state.id == id:
-            return render_template("9-states.html", state=state)
-    return render_template("9-states.html")
+    states = storage.all(State)
+    for state in states.values():
+        if state.id == str(id):
+            return render_template('9-states.html', states=state)
+    return render_template('9-states.html', not_found=True)
 
 
 if __name__ == '__main__':
