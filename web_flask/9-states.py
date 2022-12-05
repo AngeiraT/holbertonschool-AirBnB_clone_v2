@@ -19,8 +19,8 @@ def teardown(exception):
 @app.route('/states/')
 def no_cities():
     """states only"""
-    states = storage.all('State')
-    return render_template('9-states.html', states=states)
+    states = storage.all(State)
+    return render_template('9-states.html', states=states, id=False)
 
 
 @app.route('/states/<id>')
