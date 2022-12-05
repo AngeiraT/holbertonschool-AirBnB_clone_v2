@@ -11,12 +11,6 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.teardown_appcontext
-def teardown(exception):
-    """ Remove the current SQLAlchemy Session"""
-    storage.close()
-
-
 @app.route('/states/')
 def no_cities():
     """states only"""
@@ -31,8 +25,13 @@ def state_and_cities(id):
     for state in states.values():
         if state.id == str(id):
             return render_template('9-states.html', states=state)
-    return render_template('9-states.html', not_found=True)
+    return render_template('9-states.html')
 
+
+@app.teardown_appcontext
+def teardown(exception):
+    """ Remove the current SQLAlchemy Session"""
+    storage.close()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
