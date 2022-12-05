@@ -20,7 +20,7 @@ def teardown(exception):
 def no_cities():
     """states only"""
     states = storage.all(State)
-    return render_template('9-states.html', states=states, id=False)
+    return render_template('9-states.html', states=states)
 
 
 @app.route('/states/<id>')
@@ -33,4 +33,4 @@ def state_and_cities(id):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000)
