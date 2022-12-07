@@ -8,13 +8,18 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import null
 from os import getenv
 
-Base = declarative_base()
+
+if getenv('HBNB_TYPE_STORAGE') == 'db':
+    Base = declarative_base()
+else:
+    Base = object
+
 
 
 class BaseModel:
     """A base class for all hbnb models"""
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        id = Column(String(60), nullable=False, primary_key=True)
+        id = Column(String(60), nullable=False, primary_key=True, unique=True)
         created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
         updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
@@ -44,7 +49,6 @@ class BaseModel:
     def save(self):
         """Updates updated_at with current time when instance is changed"""
         from models import storage
-        import models
         self.updated_at = datetime.now()
         storage.new(self)
         storage.save()
@@ -60,7 +64,9 @@ class BaseModel:
 
         if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
+
         return dictionary
+    
 
     def delete(self):
         """ Deletes the instance from models.storage """
